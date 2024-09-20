@@ -75,12 +75,12 @@ class ExLlamaV2CacheBase:
     def create_state_tensors(
         self,
         copy_from: ExLlamaV2CacheBase | None,
-        lazy = True
+        lazy = False
     ):
         print(self.max_seq_len,"!\n")
         #assert copy_from is None or lazy == False, "Cannot use lazy cache initialization while copying"
         print("HI\n",lazy, self.dtype,"\n")
-        lazy = True
+
         if copy_from:
             self.current_seq_len = copy_from.current_seq_len
 
