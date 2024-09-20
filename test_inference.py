@@ -187,7 +187,7 @@ if args.mix_layers:
 if args.prompt:
 
     with torch.inference_mode():
-       print(args.max_seq_len,"!!!!\n") 
+
         if cache is None:
             cache = ExLlamaV2Cache(model) if not model.tp_context else ExLlamaV2Cache_TP(model)
 
