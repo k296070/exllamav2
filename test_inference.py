@@ -189,7 +189,7 @@ if args.prompt:
     with torch.inference_mode():
 
         if cache is None:
-            cache = ExLlamaV2Cache(model, max_seq_len=512) if not model.tp_context else ExLlamaV2Cache_TP(model)
+            cache = ExLlamaV2Cache(model, max_seq_len=1024) if not model.tp_context else ExLlamaV2Cache_TP(model)
 
         ids = tokenizer.encode(args.prompt)
         tokens_prompt = ids.shape[-1]
