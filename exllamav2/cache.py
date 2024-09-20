@@ -89,8 +89,8 @@ class ExLlamaV2CacheBase:
                 torch.cuda.empty_cache()
                 if copy_from is None:
                     device = self.model.cache_map.get(i, self.fixed_device)
-                    p_key_states = torch.zeros(self.shape_wk, dtype = self.dtype, device = device).contiguous()
-                    p_value_states = torch.zeros(self.shape_wv, dtype = self.dtype, device = device).contiguous()
+                    p_key_states = torch.zeros(self.shape_wk, dtype = torch.int8, device = device).contiguous()
+                    p_value_states = torch.zeros(self.shape_wv, dtype = torch.int8, device = device).contiguous()
                     if self.has_scales:
                         p_key_scales = torch.zeros(self.shape_s, dtype = torch.int8, device = device).contiguous()
                         p_value_scales = torch.zeros(self.shape_s, dtype = torch.int8, device = device).contiguous()
