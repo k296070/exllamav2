@@ -79,6 +79,7 @@ class ExLlamaV2CacheBase:
     ):
         #assert copy_from is None or lazy == False, "Cannot use lazy cache initialization while copying"
         print("HI\n",lazy,"\n")
+        lazy = True
         if copy_from:
             self.current_seq_len = copy_from.current_seq_len
 
