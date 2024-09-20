@@ -112,6 +112,7 @@ class ExLlamaV2:
                 if self.config.arch.is_moe: mlp = ExLlamaV2MoEMLP(self, layer_key, layer_idx)
                 else: mlp = ExLlamaV2MLP(self, layer_key, layer_idx)
                 self.modules += [attn, mlp]
+
         if self.config.arch.norm == "layernorm": norm = ExLlamaV2LayerNorm(self, "model.norm")
         elif self.config.arch.norm == "rmsnorm": norm = ExLlamaV2RMSNorm(self, "model.norm")
         else: raise ValueError("unknown norm type")
