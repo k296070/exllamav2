@@ -261,7 +261,7 @@ if args.eval_dataset or args.standard_perplexity:
             seqs = []
             eval_len = []
             a = 0
-            print(model.config.max_seq_len)
+            print(model.config.max_seq_len,"!!!!\n")
             while True:
                 b = a + model.config.max_seq_len
                 if b > eval_tokens.shape[-1]: break
