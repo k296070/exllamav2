@@ -85,7 +85,7 @@ class ExLlamaV2CacheBase:
         if not lazy:
 
             for i in range(self.num_hidden_layers):
-
+                torch.cuda.empty_cache()
                 if copy_from is None:
                     device = self.model.cache_map.get(i, self.fixed_device)
                     p_key_states = torch.zeros(self.shape_wk, dtype = self.dtype, device = device).contiguous()
