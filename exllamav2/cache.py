@@ -92,8 +92,8 @@ class ExLlamaV2CacheBase:
                     p_key_states = torch.zeros(self.shape_wk, dtype = self.dtype, device = device).contiguous()
                     p_value_states = torch.zeros(self.shape_wv, dtype = self.dtype, device = device).contiguous()
                     if self.has_scales:
-                        p_key_scales = torch.zeros(self.shape_s, dtype = torch.float16, device = device).contiguous()
-                        p_value_scales = torch.zeros(self.shape_s, dtype = torch.float16, device = device).contiguous()
+                        p_key_scales = torch.zeros(self.shape_s, dtype = torch.int8, device = device).contiguous()
+                        p_value_scales = torch.zeros(self.shape_s, dtype = torch.int8, device = device).contiguous()
                 else:
                     p_key_states = copy_from.key_states[i].clone()
                     p_value_states = copy_from.value_states[i].clone()
