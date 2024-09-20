@@ -113,7 +113,7 @@ if not model.loaded and not args.stream_layers:
 
     if args.mix_layers:
         print(" !! Warning, auto split does not account for VRAM requirement of replacement layers")
-    print("HOOOO\n")
+
     print(" -- Loading model...")
     cache = ExLlamaV2Cache(model, lazy = True)
     t = time.time()

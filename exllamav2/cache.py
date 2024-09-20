@@ -77,9 +77,7 @@ class ExLlamaV2CacheBase:
         copy_from: ExLlamaV2CacheBase | None,
         lazy = False
     ):
-        print(self.max_seq_len,"!\n")
-        #assert copy_from is None or lazy == False, "Cannot use lazy cache initialization while copying"
-        print("HI\n",lazy, self.dtype,"\n")
+        assert copy_from is None or lazy == False, "Cannot use lazy cache initialization while copying"
 
         if copy_from:
             self.current_seq_len = copy_from.current_seq_len
@@ -87,7 +85,7 @@ class ExLlamaV2CacheBase:
         if not lazy:
 
             for i in range(self.num_hidden_layers):
-                torch.cuda.empty_cache()
+
                 if copy_from is None:
                     device = self.model.cache_map.get(i, self.fixed_device)
                     p_key_states = torch.zeros(self.shape_wk, dtype = self.dtype, device = device).contiguous()
