@@ -113,6 +113,7 @@ class ExLlamaV2:
                 else: mlp = ExLlamaV2MLP(self, layer_key, layer_idx)
                 self.modules += [attn, mlp]
                 print("HOOOO",layer_idx,"\n")
+            torch.cuda.empty_cache()
         if self.config.arch.norm == "layernorm": norm = ExLlamaV2LayerNorm(self, "model.norm")
         elif self.config.arch.norm == "rmsnorm": norm = ExLlamaV2RMSNorm(self, "model.norm")
         else: raise ValueError("unknown norm type")
