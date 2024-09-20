@@ -187,10 +187,10 @@ if args.mix_layers:
 if args.prompt:
 
     with torch.inference_mode():
-
+        torch.cuda.empty_cache()
         if cache is None:
             cache = ExLlamaV2Cache(model, max_seq_len=1024) if not model.tp_context else ExLlamaV2Cache_TP(model)
-
+        torch.cuda.empty_cache()
         ids = tokenizer.encode(args.prompt)
         tokens_prompt = ids.shape[-1]
 
