@@ -115,7 +115,7 @@ if not model.loaded and not args.stream_layers:
         print(" !! Warning, auto split does not account for VRAM requirement of replacement layers")
     print("HOOOO\n")
     print(" -- Loading model...")
-    cache = ExLlamaV2Cache(model, lazy = True)
+    cache = ExLlamaV2Cache(model, lazy = True, max_seq_len=512)
     t = time.time()
     model.load_autosplit(cache, progress = True)
     t = time.time() - t
@@ -187,7 +187,7 @@ if args.mix_layers:
 if args.prompt:
 
     with torch.inference_mode():
-
+       print(args.max_seq_len,"!!!!\n") 
         if cache is None:
             cache = ExLlamaV2Cache(model) if not model.tp_context else ExLlamaV2Cache_TP(model)
 
@@ -261,7 +261,6 @@ if args.eval_dataset or args.standard_perplexity:
             seqs = []
             eval_len = []
             a = 0
-            print(model.config.max_seq_len,"!!!!\n")
             while True:
                 b = a + model.config.max_seq_len
                 if b > eval_tokens.shape[-1]: break
