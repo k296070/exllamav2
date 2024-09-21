@@ -72,7 +72,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
 
         self.is_sub_module = is_sub_module
 
-        self.is_tp = False
+        self.is_tp = True
         self.broadcast_type = None
         self.broadcast_type_out = None
 
