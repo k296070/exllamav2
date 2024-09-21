@@ -17,10 +17,10 @@ RESULT_FILE="$MODEL.$BIT.nsys-rep"
 
 RUN_CMD="python $BASE_DIR/test_inference.py -m ../models/Llama-3.1-8B-Instruct-exl2/ -p \"Once upon a time,\" "
 
-nsys profile \
+eval "nsys profile \
   --output="$RESULT_DIR/$RESULT_FILE" \
   --force-overwrite=true \
-  ${RUN_CMD}
+  ${RUN_CMD}"
 
 #nsys stats \
 #  --force-overwrite=true \
