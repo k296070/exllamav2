@@ -494,7 +494,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
             else:
                 pass_loras = [id(x) for x in loras]
                 pass_lora_temp = torch.empty((self.temp_lora_size,), dtype = torch.half, device = hidden_states.device)
-            print("HERE5")
+            print("HERE attn forward_paged q_attn_forward_1")
             ext_c.q_attn_forward_1(
                 self.q_handle,
                 hidden_states,
@@ -582,7 +582,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
         # Output projection
 
         if is_q:
-            print("HERE5")
+            print("HERE attn forward_paged q_attn_forward_2")
             ext_c.q_attn_forward_2(
                 self.q_handle,
                 hidden_states,
@@ -640,7 +640,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
         v_cache = [x.view(x.shape[1] // page_size, page_size, x.shape[2], x.shape[3]) for x in v_cache_f]
 
         sin, cos = ctx.get_sin_cos()
-        print("HERE5")
+        print("HERE attn forward_paged_tp tp_attn_forward_paged_")
         ext_c.tp_attn_forward_paged_(
             self.model.tp_context.ext_tp_context,
             hidden_states,
@@ -977,6 +977,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
             )
 
         if self.is_tp:
+            print("HERE attn is_tp")
             if cache is not None and use_flash_attn:
                 return self.forward_tp(
                     hidden_states,
@@ -1001,6 +1002,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
                 )
 
         if self.q_handle is None or intermediates:
+            print("HERE attn in forward_torch")
             return self.forward_torch(
                 hidden_states,
                 cache,
@@ -1046,7 +1048,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
         else:
             pass_past_len_1 = past_len
             pass_past_len_2 = none_tensor
-        print("HERE5")
+        print("HERE attn q_attn_forward_1")
         ext_c.q_attn_forward_1(
             self.q_handle,
             hidden_states,
@@ -1103,7 +1105,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
             attn_output = attn_func(batch_size, q_len, q_states, k_states, v_states, attn_params, cfg)
 
         # Output projection
-        print("HERE5")
+        print("HERE attn q_attn_forward_2")
         ext_c.q_attn_forward_2(
             self.q_handle,
             hidden_states,
@@ -1147,7 +1149,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
         k_cache, v_cache = cache.get_kv_state(self.layer_idx, batch_size, 0, past_len) if cache else ([], [])
 
         sin, cos = ctx.get_sin_cos()
-        print("HERE5")
+        print("HERE attn forward_tp tp_attn_forward_")
         ext_c.tp_attn_forward_(
             self.model.tp_context.ext_tp_context,
             hidden_states,
