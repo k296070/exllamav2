@@ -220,13 +220,13 @@ class ExLlamaV2BaseGenerator:
             ids = ids[:, :-1]
 
         # Process prompt and begin gen
-        print(" seq_ids ", self.sequence_ids, " input emb 1",input_embeddings)
+        
         self._gen_begin_base(ids,
                              mask,
                              loras,
                              position_offsets = position_offsets,
                              input_embeddings = input_embeddings)
-        print(" seq_ids ", self.sequence_ids, " input emb 1a",input_embeddings)
+        
         if self.abort_event and self.abort_event.is_set():
             if isinstance(prompt, str): return ""
             else: return [""] * len(prompt)
@@ -240,14 +240,14 @@ class ExLlamaV2BaseGenerator:
 
         healed_token = []
         id_to_piece = self.tokenizer.get_id_to_piece_list()
-        print(unhealed_token, self.sequence_ids)
+        
         if unhealed_token is not None:
             unhealed_token_list = unhealed_token.flatten().tolist()
             heal = [id_to_piece[x] for x in unhealed_token_list]
         else:
             heal = None
 
-        print("heal ",heal," seq_ids ", self.sequence_ids, " input emb 2",input_embeddings)
+        
 
         for f in filters: 
             f.begin(heal)
