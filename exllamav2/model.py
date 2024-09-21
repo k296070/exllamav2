@@ -94,7 +94,7 @@ class ExLlamaV2:
         if self.config.arch.learned_pos_emb_key:
             pos_emb = ExLlamaV2PosEmbedding(self, self.config.arch.learned_pos_emb_key)
             self.modules += [pos_emb]
-
+        print("layer num",self.config.num_hidden_layers)
         for layer_idx in range(self.config.num_hidden_layers):
 
             layer_key = f"model.layers.{layer_idx}"
