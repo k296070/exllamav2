@@ -594,24 +594,24 @@ if args.speed:
         current_idx = ids.shape[-1]
         next_stop = 128
 
-        #while True:
-#
-        #    time_begin = time.time()
-#
-        #    tokens = next_stop - current_idx
-        #    for i in range(tokens):
-#
-        #        logits = model.forward(ids[:, -1:], cache)
-        #        sample = torch.argmax(logits[0, -1]).cpu().unsqueeze(0).unsqueeze(0)
-        #        sample.clamp_(0, tokenizer.get_vocab_size() - 1)
-        #        ids = torch.cat((ids, sample), dim=-1)
-#
-        #    time_end = time.time()
-        #    tps = tokens / (time_end - time_begin)
-#
-        #    print(f" ** Position {current_idx:>5} + {tokens:>3} tokens: {tps:>9.4f} t/s")
-#
-        #    current_idx = next_stop
-        #    next_stop = min(next_stop + 128, model.config.max_seq_len)
-        #    if next_stop == current_idx: break
+
+
+        time_begin = time.time()
+
+        tokens = next_stop - current_idx
+        for i in range(tokens):
+
+            logits = model.forward(ids[:, -1:], cache)
+            sample = torch.argmax(logits[0, -1]).cpu().unsqueeze(0).unsqueeze(0)
+            sample.clamp_(0, tokenizer.get_vocab_size() - 1)
+            ids = torch.cat((ids, sample), dim=-1)
+
+        time_end = time.time()
+        tps = tokens / (time_end - time_begin)
+
+        print(f" ** Position {current_idx:>5} + {tokens:>3} tokens: {tps:>9.4f} t/s")
+
+        current_idx = next_stop
+        next_stop = min(next_stop + 128, model.config.max_seq_len)
+
 
