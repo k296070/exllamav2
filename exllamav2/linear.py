@@ -309,7 +309,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
         force_cuda: bool = False,
         **kwargs
     ) -> torch.Tensor | dict[str: torch.Tensor]:
-
+        print("HERE3")
         if self.is_tp:
             if self.out_features_tp:
                 return self.forward_tp(
