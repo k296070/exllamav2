@@ -247,7 +247,7 @@ class ExLlamaV2BaseGenerator:
         else:
             heal = None
 
-        print(heal, self.sequence_ids)
+        print("heal ",heal," seq_ids ", self.sequence_ids)
 
         for f in filters: 
             print("in f")
