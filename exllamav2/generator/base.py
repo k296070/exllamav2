@@ -263,74 +263,76 @@ class ExLlamaV2BaseGenerator:
                                         loras = loras,
                                         position_offsets = position_offsets,
                                         indexed_embeddings = input_embeddings).float().cpu()
-
-            token, ptokens, pprobs, prob, eos = \
-            ExLlamaV2Sampler.sample(
-                logits,
-                gen_settings,
-                self.sequence_ids,
-                random.random(),
-                self.tokenizer,
-                prefix_token = unhealed_token,
-                filters = filters,
-                filter_prefer_eos = filter_prefer_eos
-            )
-
-            if unhealed_token is not None:
-                unhealed_token_copy = unhealed_token
-                healed_token = token
-
-            if stop_token is not None:
-                for b in range(batch_size):
-                    if token[b, 0].item() == stop_token:
-                        batch_eos[b] = True
-                        if all(batch_eos): eos = True
-                    if batch_eos[b]:
-                        token[b, 0] = self.tokenizer.pad_token_id
-
-            # Post sampling hook
-
-            if gen_settings.post_sampling_hooks:
-                p = ExLlamaV2PostSamplingResult(
-                    sampled_token = token,
-                    sampled_prob = prob,
-                    logits = logits,
-                    candidate_tokens = None if ptokens.is_meta else ptokens,
-                    candidate_probs = None if pprobs.is_meta else pprobs
-                )
-                for h in gen_settings.post_sampling_hooks:
-                    h(p)
-                token = p.sampled_token
-                if p.feed_filters:
-                    for f in filters: f.feed(token)
-            else:
-                for f in filters: f.feed(token)
-
-            self.sequence_ids = torch.cat([self.sequence_ids, token], dim = 1)
-
-            unhealed_token = None
-            if eos: break
+            sample = torch.argmax(logits[0, -1]).cpu().unsqueeze(0).unsqueeze(0)
+            sample.clamp_(0, self.tokenizer.get_vocab_size() - 1)
+            ids = torch.cat((ids, sample), dim=-1)
+            #token, ptokens, pprobs, prob, eos = \
+            #ExLlamaV2Sampler.sample(
+            #    logits,
+            #    gen_settings,
+            #    self.sequence_ids,
+            #    random.random(),
+            #    self.tokenizer,
+            #    prefix_token = unhealed_token,
+            #    filters = filters,
+            #    filter_prefer_eos = filter_prefer_eos
+            #)
+#
+            #if unhealed_token is not None:
+            #    unhealed_token_copy = unhealed_token
+            #    healed_token = token
+#
+            #if stop_token is not None:
+            #    for b in range(batch_size):
+            #        if token[b, 0].item() == stop_token:
+            #            batch_eos[b] = True
+            #            if all(batch_eos): eos = True
+            #        if batch_eos[b]:
+            #            token[b, 0] = self.tokenizer.pad_token_id
+#
+            ## Post sampling hook
+#
+            #if gen_settings.post_sampling_hooks:
+            #    p = ExLlamaV2PostSamplingResult(
+            #        sampled_token = token,
+            #        sampled_prob = prob,
+            #        logits = logits,
+            #        candidate_tokens = None if ptokens.is_meta else ptokens,
+            #        candidate_probs = None if pprobs.is_meta else pprobs
+            #    )
+            #    for h in gen_settings.post_sampling_hooks:
+            #        h(p)
+            #    token = p.sampled_token
+            #    if p.feed_filters:
+            #        for f in filters: f.feed(token)
+            #else:
+            #    for f in filters: f.feed(token)
+#
+            #self.sequence_ids = torch.cat([self.sequence_ids, token], dim = 1)
+#
+            #unhealed_token = None
+            #if eos: break
 
         # Decode
 
-        decode_ids = self.sequence_ids[:, first_token:]
-        if input_embeddings is not None:
-            decode_ids = torch.stack([decode_ids[i][decode_ids[i] != self.tokenizer.pad_token_id] for i in range(batch_size)])
-
-        if len(healed_token) and completion_only:
-            decode_ids = torch.cat([healed_token, decode_ids], dim = -1)
-
-        text = self.tokenizer.decode(decode_ids, decode_special_tokens = decode_special_tokens)
-
-        if len(healed_token) and completion_only:
-            pre_text = self.tokenizer.decode(unhealed_token_copy, decode_special_tokens = decode_special_tokens)
-            text = [t[len(p):] for t, p in zip(text, pre_text)]
-
-        if isinstance(prompt, str):
-            return text[0]
-        else:
-            return text
-
+        #decode_ids = self.sequence_ids[:, first_token:]
+        #if input_embeddings is not None:
+        #    decode_ids = torch.stack([decode_ids[i][decode_ids[i] != self.tokenizer.pad_token_id] for i in range(batch_size)])
+#
+        #if len(healed_token) and completion_only:
+        #    decode_ids = torch.cat([healed_token, decode_ids], dim = -1)
+#
+        #text = self.tokenizer.decode(decode_ids, decode_special_tokens = decode_special_tokens)
+#
+        #if len(healed_token) and completion_only:
+        #    pre_text = self.tokenizer.decode(unhealed_token_copy, decode_special_tokens = decode_special_tokens)
+        #    text = [t[len(p):] for t, p in zip(text, pre_text)]
+#
+        #if isinstance(prompt, str):
+        #    return text[0]
+        #else:
+        #    return text
+        return "HI"
 
     def _gen_begin_base(self,
                         input_ids: torch.Tensor,
