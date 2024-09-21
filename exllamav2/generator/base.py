@@ -220,7 +220,7 @@ class ExLlamaV2BaseGenerator:
             ids = ids[:, :-1]
 
         # Process prompt and begin gen
-
+        print("heal ",heal," seq_ids ", self.sequence_ids, " input emb 1",input_embeddings)
         self._gen_begin_base(ids,
                              mask,
                              loras,
@@ -247,10 +247,9 @@ class ExLlamaV2BaseGenerator:
         else:
             heal = None
 
-        print("heal ",heal," seq_ids ", self.sequence_ids)
+        print("heal ",heal," seq_ids ", self.sequence_ids, " input emb 2",input_embeddings)
 
         for f in filters: 
-            print("in f")
             f.begin(heal)
 
         # Generate tokens
