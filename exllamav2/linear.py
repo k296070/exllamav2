@@ -8,6 +8,7 @@ from exllamav2.module import ExLlamaV2Module
 from exllamav2.compat import safe_move_tensor
 from exllamav2.tensor_p import BROADCAST_VC
 from exllamav2.util import unpack_4bit, pack_4bit
+import torch.cuda.nvtx as nvtx
 import gc
 
 from typing import TYPE_CHECKING
@@ -354,8 +355,9 @@ class ExLlamaV2Linear(ExLlamaV2Module):
             hidden_states = hidden_states.view(-1, hidden_states.shape[-1])
             output = torch.empty((hidden_states.shape[0], self.out_features), dtype = torch.half, device = self.device())
             #print("HERE4")
-            print("!", end='')
+            nvtx.range_push("gemm_half_q_half")
             ext_c.gemm_half_q_half(hidden_states, self.q_handle, output, force_cuda)
+            nvtx.range_pop()
             #print("TENSOR output shape",output.shape,"\n")
             hidden_states_out = output.view(output_shape)
 
