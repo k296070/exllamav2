@@ -240,13 +240,18 @@ class ExLlamaV2BaseGenerator:
 
         healed_token = []
         id_to_piece = self.tokenizer.get_id_to_piece_list()
+        print(unhealed_token, self.sequence_ids)
         if unhealed_token is not None:
             unhealed_token_list = unhealed_token.flatten().tolist()
             heal = [id_to_piece[x] for x in unhealed_token_list]
         else:
             heal = None
 
-        for f in filters: f.begin(heal)
+        print(heal, self.sequence_ids)
+
+        for f in filters: 
+            print("in f")
+            f.begin(heal)
 
         # Generate tokens
 
