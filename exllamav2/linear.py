@@ -309,7 +309,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
         force_cuda: bool = False,
         **kwargs
     ) -> torch.Tensor | dict[str: torch.Tensor]:
-        #print("HERE3")
+
         if self.is_tp:
             if self.out_features_tp:
                 return self.forward_tp(
@@ -349,13 +349,12 @@ class ExLlamaV2Linear(ExLlamaV2Module):
                 return hidden_states_out
 
         if self.q_handle is not None and not force_recons:
-            #print("TENSOR",hidden_states.shape,"\n")
+
             output_shape = hidden_states.shape[:-1] + (self.out_features,)
             hidden_states = hidden_states.view(-1, hidden_states.shape[-1])
             output = torch.empty((hidden_states.shape[0], self.out_features), dtype = torch.half, device = self.device())
-            #print("HERE4")
             ext_c.gemm_half_q_half(hidden_states, self.q_handle, output, force_cuda)
-            #print("TENSOR output shape",output.shape,"\n")
+
             hidden_states_out = output.view(output_shape)
 
         else:
@@ -400,7 +399,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
         dim: int = 1,
         **kwargs
     ) -> torch.Tensor | dict[str: torch.Tensor]:
-        #print("HERE forward_tp")
+
         ctx = self.model.tp_context
         split = ctx.get_split(self.broadcast_type)
 
@@ -451,7 +450,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
         dim: int = 1,
         **kwargs
     ) -> torch.Tensor | dict[str: torch.Tensor]:
-        #print("HERE forward_tp_row")
+
         ctx = self.model.tp_context
         split = ctx.get_split(self.broadcast_type)
 

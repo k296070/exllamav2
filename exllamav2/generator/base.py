@@ -220,6 +220,7 @@ class ExLlamaV2BaseGenerator:
             ids = ids[:, :-1]
 
         # Process prompt and begin gen
+
         self._gen_begin_base(ids,
                              mask,
                              loras,
@@ -239,14 +240,11 @@ class ExLlamaV2BaseGenerator:
 
         healed_token = []
         id_to_piece = self.tokenizer.get_id_to_piece_list()
-        
         if unhealed_token is not None:
             unhealed_token_list = unhealed_token.flatten().tolist()
             heal = [id_to_piece[x] for x in unhealed_token_list]
         else:
             heal = None
-
-        
 
         for f in filters: f.begin(heal)
 
@@ -352,6 +350,5 @@ class ExLlamaV2BaseGenerator:
                            position_offsets = position_offsets,
                            abort_event = self.abort_event,
                            indexed_embeddings = input_embeddings)
-
         if self.abort_event and self.abort_event.is_set():
             self.sequence_ids = self.sequence_ids[:, :self.cache.current_seq_len + 1]
