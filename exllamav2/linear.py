@@ -349,11 +349,12 @@ class ExLlamaV2Linear(ExLlamaV2Module):
                 return hidden_states_out
 
         if self.q_handle is not None and not force_recons:
-
+            print("TENSOR shape",hidden_states.shape,"\n")
             output_shape = hidden_states.shape[:-1] + (self.out_features,)
             hidden_states = hidden_states.view(-1, hidden_states.shape[-1])
             output = torch.empty((hidden_states.shape[0], self.out_features), dtype = torch.half, device = self.device())
             #print("HERE4")
+            
             ext_c.gemm_half_q_half(hidden_states, self.q_handle, output, force_cuda)
 
             hidden_states_out = output.view(output_shape)
