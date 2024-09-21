@@ -977,7 +977,7 @@ class ExLlamaV2:
             #print(idx," ",module)
             x = module.forward(x, cache = cache, attn_params = attn_params, past_len = past_len, loras = loras, **kwargs)
 
-            if preprocess_only and idx == 1:
+            if preprocess_only and idx == 2:
                 x = None
                 break
 
