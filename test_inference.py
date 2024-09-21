@@ -196,8 +196,8 @@ if args.prompt:
 
         print(f" -- Warmup...")
 
-        generator = ExLlamaV2BaseGenerator(model, cache, tokenizer)
-        if not args.no_warmup: generator.warmup()
+        #generator = ExLlamaV2BaseGenerator(model, cache, tokenizer)
+        #if not args.no_warmup: generator.warmup()
 
         print(f" -- Generating...")
         print()
