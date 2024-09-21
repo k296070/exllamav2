@@ -212,21 +212,21 @@ class ExLlamaV2BaseGenerator:
             first_token = ids.shape[-1]
 
         # Prepare for healing
-
+        print("1 ids ",ids)
         unhealed_token = None
         if ids.shape[-1] < 2: token_healing = False
         if token_healing:
             unhealed_token = ids[:, -1:]
             ids = ids[:, :-1]
-
+        print("2 ids ",ids)
         # Process prompt and begin gen
-        
+        print("3 ids ",ids, " seq ",self.sequence_ids)
         self._gen_begin_base(ids,
                              mask,
                              loras,
                              position_offsets = position_offsets,
                              input_embeddings = input_embeddings)
-        
+        print("5 ids ",ids, " seq ",self.sequence_ids)
         if self.abort_event and self.abort_event.is_set():
             if isinstance(prompt, str): return ""
             else: return [""] * len(prompt)
@@ -354,5 +354,6 @@ class ExLlamaV2BaseGenerator:
                            position_offsets = position_offsets,
                            abort_event = self.abort_event,
                            indexed_embeddings = input_embeddings)
+        print("4 seq ",self.sequence_ids)
         if self.abort_event and self.abort_event.is_set():
             self.sequence_ids = self.sequence_ids[:, :self.cache.current_seq_len + 1]
