@@ -354,7 +354,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
             hidden_states = hidden_states.view(-1, hidden_states.shape[-1])
             output = torch.empty((hidden_states.shape[0], self.out_features), dtype = torch.half, device = self.device())
             #print("HERE4")
-            print("!")
+            print("!", end='')
             ext_c.gemm_half_q_half(hidden_states, self.q_handle, output, force_cuda)
             #print("TENSOR output shape",output.shape,"\n")
             hidden_states_out = output.view(output_shape)
