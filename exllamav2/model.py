@@ -805,7 +805,7 @@ class ExLlamaV2:
         if cache is None or not isinstance(cache, ExLlamaV2CacheBase):
 
             assert q_len <= effective_max_input_len, "Maximum input length exceeded in model.forward"
-            print("HERE\n")
+            #print("HERE\n")
             result = self.forward_chunk(input_ids = input_ids,
                                         cache = cache,
                                         input_mask = input_mask,
