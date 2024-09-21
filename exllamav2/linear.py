@@ -312,6 +312,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
 
         if self.is_tp:
             if self.out_features_tp:
+                print("HERE forward_tp")
                 return self.forward_tp(
                     hidden_states,
                     cache,
@@ -324,6 +325,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
                     **kwargs
                 )
             elif self.in_features_tp:
+                print("HERE forward_tp_row")
                 return self.forward_tp_row(
                     hidden_states,
                     cache,
