@@ -312,7 +312,6 @@ class ExLlamaV2Linear(ExLlamaV2Module):
 
         if self.is_tp:
             if self.out_features_tp:
-                print("HERE forward_tp")
                 return self.forward_tp(
                     hidden_states,
                     cache,
@@ -325,7 +324,6 @@ class ExLlamaV2Linear(ExLlamaV2Module):
                     **kwargs
                 )
             elif self.in_features_tp:
-                print("HERE forward_tp_row")
                 return self.forward_tp_row(
                     hidden_states,
                     cache,
@@ -401,7 +399,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
         dim: int = 1,
         **kwargs
     ) -> torch.Tensor | dict[str: torch.Tensor]:
-
+        print("HERE forward_tp")
         ctx = self.model.tp_context
         split = ctx.get_split(self.broadcast_type)
 
@@ -452,7 +450,7 @@ class ExLlamaV2Linear(ExLlamaV2Module):
         dim: int = 1,
         **kwargs
     ) -> torch.Tensor | dict[str: torch.Tensor]:
-
+        print("HERE forward_tp_row")
         ctx = self.model.tp_context
         split = ctx.get_split(self.broadcast_type)
 
