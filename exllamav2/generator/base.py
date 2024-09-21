@@ -220,7 +220,7 @@ class ExLlamaV2BaseGenerator:
             ids = ids[:, :-1]
 
         # Process prompt and begin gen
-        print("heal ",heal," seq_ids ", self.sequence_ids, " input emb 1",input_embeddings)
+        print(" seq_ids ", self.sequence_ids, " input emb 1",input_embeddings)
         self._gen_begin_base(ids,
                              mask,
                              loras,
