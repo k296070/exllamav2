@@ -805,7 +805,7 @@ class ExLlamaV2:
         if cache is None or not isinstance(cache, ExLlamaV2CacheBase):
 
             assert q_len <= effective_max_input_len, "Maximum input length exceeded in model.forward"
-            print("HERE no cache\n")
+            print("HERE no\n")
             result = self.forward_chunk(input_ids = input_ids,
                                         cache = cache,
                                         input_mask = input_mask,
@@ -954,7 +954,7 @@ class ExLlamaV2:
         device = self.modules[0].device_idx
 
         for idx, module in enumerate(self.modules):
-            print(idx,module)
+
             if idx == self.head_layer_idx and last_id_only:
                 x = x.narrow(-2, -1, 1)
 
@@ -977,7 +977,7 @@ class ExLlamaV2:
             #print(idx," ",module)
             x = module.forward(x, cache = cache, attn_params = attn_params, past_len = past_len, loras = loras, **kwargs)
 
-            if preprocess_only and idx == 3:
+            if preprocess_only and idx == self.last_kv_layer_idx:
                 x = None
                 break
 

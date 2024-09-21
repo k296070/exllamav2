@@ -196,8 +196,8 @@ if args.prompt:
 
         print(f" -- Warmup...")
 
-        generator = ExLlamaV2BaseGenerator(model, cache, tokenizer) #221
-        if not args.no_warmup: generator.warmup()
+        generator = ExLlamaV2BaseGenerator(model, cache, tokenizer)
+        #if not args.no_warmup: generator.warmup()#221calls
 
         print(f" -- Generating...")
         print()
@@ -211,14 +211,14 @@ if args.prompt:
 
         time_begin = time.time()
 
-        #output = generator.generate_simple(args.prompt, settings, args.tokens, token_healing = True, add_bos = not args.prompt_no_bos)
+        output = generator.generate_simple(args.prompt, settings, args.tokens, token_healing = True, add_bos = not args.prompt_no_bos)
 
         torch.cuda.synchronize()
         time_prompt = time.time()
 
         time_end = time.time()
 
-    #print(output)
+    print(output)
     print()
 
     total_gen = time_end - time_begin
