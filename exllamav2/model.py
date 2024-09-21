@@ -805,7 +805,7 @@ class ExLlamaV2:
         if cache is None or not isinstance(cache, ExLlamaV2CacheBase):
 
             assert q_len <= effective_max_input_len, "Maximum input length exceeded in model.forward"
-            #print("HERE\n")
+            print("HERE no cache\n")
             result = self.forward_chunk(input_ids = input_ids,
                                         cache = cache,
                                         input_mask = input_mask,
@@ -974,7 +974,7 @@ class ExLlamaV2:
             if n_device is not None and n_device != device and n_device >= 0:
                 x = safe_move_tensor(x, n_device, non_blocking = True)
             #print("HERE2",idx,"\n")
-            print(idx," ",module)
+            #print(idx," ",module)
             x = module.forward(x, cache = cache, attn_params = attn_params, past_len = past_len, loras = loras, **kwargs)
 
             if preprocess_only and idx == self.last_kv_layer_idx:
