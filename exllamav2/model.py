@@ -977,7 +977,7 @@ class ExLlamaV2:
             #print(idx," ",module)
             x = module.forward(x, cache = cache, attn_params = attn_params, past_len = past_len, loras = loras, **kwargs)
 
-            if preprocess_only and idx == self.last_kv_layer_idx:
+            if preprocess_only and idx == 1:
                 x = None
                 break
 
