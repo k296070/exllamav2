@@ -587,13 +587,13 @@ if args.speed:
             cache = ExLlamaV2Cache(model, max_seq_len=1024) if not model.tp_context else ExLlamaV2Cache_TP(model)
         cache.current_seq_len = 0
 
-        #print(f" -- Measuring token speed...")
-        #ids = tokenizer.encode("X")
-        #model.forward(ids[:, :])
-#
-        #current_idx = ids.shape[-1]
-        #next_stop = 128
-#
+        print(f" -- Measuring token speed...")
+        ids = tokenizer.encode("X")
+        model.forward(ids[:, :])
+
+        current_idx = ids.shape[-1]
+        next_stop = 128
+
         #while True:
 #
         #    time_begin = time.time()
