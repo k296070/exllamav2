@@ -226,7 +226,7 @@ class ExLlamaV2BaseGenerator:
                              loras,
                              position_offsets = position_offsets,
                              input_embeddings = input_embeddings)
-
+        print(" seq_ids ", self.sequence_ids, " input emb 1a",input_embeddings)
         if self.abort_event and self.abort_event.is_set():
             if isinstance(prompt, str): return ""
             else: return [""] * len(prompt)
