@@ -974,6 +974,7 @@ class ExLlamaV2:
             if n_device is not None and n_device != device and n_device >= 0:
                 x = safe_move_tensor(x, n_device, non_blocking = True)
             #print("HERE2",idx,"\n")
+            print(idx," ",module)
             x = module.forward(x, cache = cache, attn_params = attn_params, past_len = past_len, loras = loras, **kwargs)
 
             if preprocess_only and idx == self.last_kv_layer_idx:
