@@ -211,7 +211,7 @@ if args.prompt:
 
         time_begin = time.time()
 
-        output = generator.generate_simple(args.prompt, settings, args.tokens, token_healing = True, add_bos = not args.prompt_no_bos)
+        #output = generator.generate_simple(args.prompt, settings, args.tokens, token_healing = True, add_bos = not args.prompt_no_bos)
 
         torch.cuda.synchronize()
         time_prompt = time.time()

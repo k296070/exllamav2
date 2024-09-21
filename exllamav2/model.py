@@ -954,7 +954,7 @@ class ExLlamaV2:
         device = self.modules[0].device_idx
 
         for idx, module in enumerate(self.modules):
-
+            print(idx)
             if idx == self.head_layer_idx and last_id_only:
                 x = x.narrow(-2, -1, 1)
 
