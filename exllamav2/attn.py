@@ -1045,7 +1045,7 @@ class ExLlamaV2Attention(ExLlamaV2Module):
         else:
             pass_past_len_1 = past_len
             pass_past_len_2 = none_tensor
-
+        print("! q_attn_forward_1",self.q_handle,q_len,pass_past_len_1,pass_past_len_2,pass_loras,pass_lora_temp)
         ext_c.q_attn_forward_1(
             self.q_handle,
             hidden_states,
