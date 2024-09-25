@@ -11,7 +11,7 @@ mkdir -p "$RESULT_DIR"
 
 # FIXME
 MODEL="LLAMA3"
-BIT="3BIT"
+BIT="S"
 
 RESULT_FILE="$MODEL.$BIT.nsys-rep"
 
