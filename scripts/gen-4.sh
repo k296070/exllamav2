@@ -1,4 +1,4 @@
-python convert.py \
-    -i ../models/llama-3-8b-fp16/ \
-    -o ../models/llama-3-8b-4bpw-exl2-H/ \
+python ./exllamav2/conversion/convert.py \
+    -i ../models/Meta-Llama-3-8B/ \
+    -o ../models/Meta-Llama-3-8B-4bpw-exl2-H/ \
     -b 4.0 
