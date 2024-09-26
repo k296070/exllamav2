@@ -131,10 +131,10 @@ class QParams:
 qparams_attn = \
 [
     [
-        QParams(128, [3], [1], 4),
-        QParams(128, [3], [1], 4),
-        QParams(128, [3], [1], 4),
-        QParams(128, [3], [1], 4),
+        QParams(128, [4], [1], 4),
+        QParams(128, [4], [1], 4),
+        QParams(128, [4], [1], 4),
+        QParams(128, [4], [1], 4),
     ],
 
 ]
@@ -142,9 +142,9 @@ qparams_attn = \
 qparams_mlp = \
 [
     [
-        QParams(128, [3], [1], 4),
-        QParams(128, [3], [1], 4),
-        QParams(128, [3], [1], 4),
+        QParams(128, [4], [1], 4),
+        QParams(128, [4], [1], 4),
+        QParams(128, [4], [1], 4),
     ]
 ]
 
